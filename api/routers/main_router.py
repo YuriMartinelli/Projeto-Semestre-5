@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
 
-router = APIRouter()
+main_router = APIRouter()
 
-router.get("/king")
+main_router.get("/king")
 
 
 def king():
