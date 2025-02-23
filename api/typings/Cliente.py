@@ -7,3 +7,9 @@ class ClienteModel(BaseModel):
     nome: str
     cpf: str
     telefone: str
+
+
+class ClienteUpdateModel(BaseModel):
+    nome: Optional[str] = None
+    cpf: Optional[str] = None
+    telefone: Optional[str] = None
