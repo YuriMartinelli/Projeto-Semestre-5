@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-
+# Yuri Martinelli
 from configs.settings import *
 from routers.main_router import main_router
 from routers.funcionario_router import funcionario_router

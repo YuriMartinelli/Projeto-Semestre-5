@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
-from typings.Cliente import ClienteModel
-
+from typings.Cliente import ClienteModel, ClienteUpdateModel
+# Yuri Martinelli
 cliente_router = APIRouter(prefix="/clientes", tags=["Funcionário"])
 
 
@@ -21,7 +21,7 @@ def post_cliente(corpo: ClienteModel):
 
 
 @cliente_router.put("/atualizar_cliente/{id}", status_code=status.HTTP_200_OK)
-def put_cliente(id: int, corpo: ClienteModel):
+def put_cliente(id: int, corpo: ClienteUpdateModel):
     return {"msg": "put executado", "id": id, "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
 
 
