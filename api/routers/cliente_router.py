@@ -1,5 +1,7 @@
 from fastapi import APIRouter, status
 
+from typings.Cliente import ClienteModel
+
 cliente_router = APIRouter(prefix="/clientes", tags=["Funcionário"])
 
 
@@ -14,13 +16,13 @@ def get_cliente(id: int):
 
 
 @cliente_router.post("/criar_cliente/", status_code=status.HTTP_201_CREATED)
-def post_cliente():
-    return {"msg": "post executado"}
+def post_cliente(corpo: ClienteModel):
+    return {"msg": "post executado", "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
 
 
 @cliente_router.put("/atualizar_cliente/{id}", status_code=status.HTTP_200_OK)
-def put_cliente(id: int):
-    return {"msg": "put executado"}
+def put_cliente(id: int, corpo: ClienteModel):
+    return {"msg": "put executado", "id": id, "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
 
 
 @cliente_router.delete("/deletar_cliente/{id}", status_code=status.HTTP_200_OK)
