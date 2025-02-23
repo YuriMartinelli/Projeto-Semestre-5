@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 
-from api.typings.Produto import ProdutoModel
+from typings.Produto import ProdutoModel
 
 produto_router = APIRouter(prefix="/produtos", tags=["Funcionário"])
 
@@ -17,7 +17,7 @@ def get_produto(id: int):
 
 @produto_router.post("/criar_produto/", status_code=status.HTTP_201_CREATED)
 def post_produto(corpo: ProdutoModel):
-    return {"msg": "post executado", "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
+    return {"msg": "post executado", "nome": corpo.nome, "descricao": corpo.descricao, "valor_unitario": corpo.valor_unitario}
 
 
 @produto_router.put("/atualizar_produto/{id}", status_code=status.HTTP_200_OK)
