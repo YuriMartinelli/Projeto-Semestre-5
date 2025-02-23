@@ -1,5 +1,7 @@
 from fastapi import APIRouter, status
 
+from typings.Funcionario import FuncionarioModel
+
 funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
 
 
@@ -14,13 +16,12 @@ def get_funcionario(id: int):
 
 
 @funcionario_router.post("/criar_funcionario/", status_code=status.HTTP_201_CREATED)
-def post_funcionario():
-    return {"msg": "post executado"}
+def post_funcionario(corpo: FuncionarioModel):
+    return {"msg": "post executado", "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
 
 
-@funcionario_router.put("/atualizar_funcionario/{id}", status_code=status.HTTP_200_OK)
-def put_funcionario(id: int):
-    return {"msg": "put executado"}
+def put_funcionario(id: int, corpo: FuncionarioModel):
+    return {"msg": "put executado", "id": id, "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
 
 
 @funcionario_router.delete("/deletar_funcionario/{id}", status_code=status.HTTP_200_OK)
