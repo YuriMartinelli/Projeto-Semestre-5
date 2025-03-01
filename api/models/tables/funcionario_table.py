@@ -2,7 +2,7 @@ from sqlalchemy import CHAR, VARCHAR, Column, Integer
 import db
 
 
-class Funcionario(db.Base):
+class FuncionarioTable(db.Base):
     __tablename__ = 'tb_funcionario'
 
     id_funcionario = Column(Integer, primary_key=True,

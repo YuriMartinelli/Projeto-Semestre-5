@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 
-from controllers.funcionario_controller import controller_get_funcionario
+from controllers.funcionario_controller import controller_get_funcionario, controller_post_funcionario
 from typings.Funcionario import FuncionarioModel
 
 funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
@@ -17,8 +17,8 @@ async def get_funcionario(id: int):
 
 
 @funcionario_router.post("/criar_funcionario/", status_code=status.HTTP_201_CREATED)
-async def post_funcionario(corpo: FuncionarioModel):
-    return {"msg": "post executado", "nome": corpo.nome, "cpf": corpo.cpf, "telefone": corpo.telefone}
+async def post_funcionario(informacoes_funcionario: FuncionarioModel):
+    return await controller_post_funcionario(informacoes_funcionario)
 
 
 async def put_funcionario(id: int, corpo: FuncionarioModel):
