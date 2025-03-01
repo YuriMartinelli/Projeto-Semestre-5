@@ -1,5 +1,6 @@
-from api.db import db
-from tables.funcionario_table import Funcionario
+from models.tables.funcionario_table import Funcionario
+import db
+
 
 session = db.Session()
 

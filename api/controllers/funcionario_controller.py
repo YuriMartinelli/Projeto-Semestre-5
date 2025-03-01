@@ -1,4 +1,4 @@
-from api.services.funcionario_service import servico_get_funcionario
+from services.funcionario_service import servico_get_funcionario
 
 
 async def controller_get_funcionario():

@@ -1,4 +1,4 @@
-from api.models.funcionario_model import model_get_funcionario
+from models.funcionario_model import model_get_funcionario
 
 
 async def servico_get_funcionario():

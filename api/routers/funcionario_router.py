@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 
-from api.controllers.funcionario_controller import controller_get_funcionario
+from controllers.funcionario_controller import controller_get_funcionario
 from typings.Funcionario import FuncionarioModel
 
 funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
