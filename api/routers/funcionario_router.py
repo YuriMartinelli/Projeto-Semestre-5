@@ -1,5 +1,6 @@
 from fastapi import APIRouter, status
 
+from api.controllers.funcionario_controller import controller_get_funcionario
 from typings.Funcionario import FuncionarioModel
 
 funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
@@ -7,7 +8,7 @@ funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
 
 @funcionario_router.get("/consultar_funcionarios", status_code=status.HTTP_200_OK)
 async def get_funcionario():
-    return {"msg": "get todos executado"}
+    return await controller_get_funcionario()
 
 
 @funcionario_router.get("/consultar_funcionario/{id}", status_code=status.HTTP_200_OK)
