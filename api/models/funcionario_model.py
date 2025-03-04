@@ -1,5 +1,5 @@
 from typings.Funcionario import FuncionarioModel
-from models.tables.funcionario_table import FuncionarioTable
+from api.database.schemas.funcionario_schema import FuncionarioTable
 import db
 
 
