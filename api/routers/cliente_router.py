@@ -7,7 +7,7 @@ cliente_router = APIRouter(prefix="/clientes", tags=["Funcionário"])
 
 
 @cliente_router.get("/consultar_clientes", status_code=status.HTTP_200_OK)
-async def get_funcionario():
+async def get_cliente():
     return await controller_get_cliente()
 
 
