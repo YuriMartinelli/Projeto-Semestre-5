@@ -22,29 +22,29 @@ async def model_get_produto_by_id(id: int):
 
 
 async def model_atualizar_produto(id: int, corpo: ProdutoModel):
-    CLIENTE_ENCONTRADO = session.query(ProdutoSchema).filter(
+    PRODUTO_ENCONTRADO = session.query(ProdutoSchema).filter(
         ProdutoSchema.id_produto == id).first()
 
-    if not CLIENTE_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
+    if not PRODUTO_ENCONTRADO:
+        return {"msg": "Produto não encontrado"}
 
     for chave, valor in corpo.model_dump().items():
-        setattr(CLIENTE_ENCONTRADO, chave, valor)
+        setattr(PRODUTO_ENCONTRADO, chave, valor)
 
     session.commit()
     session.refresh()
 
-    return {"msg": f"Funcionario atualizado com sucesso! id: {id}"}
+    return {"msg": f"Produto atualizado com sucesso! id: {id}"}
 
 
 async def model_deletar_produto(id: int):
-    CLIENTE_ENCONTRADO = session.query(ProdutoSchema).filter(
+    PRODUTO_ENCONTRADO = session.query(ProdutoSchema).filter(
         ProdutoSchema.id_produto == id).first()
 
-    if not CLIENTE_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
+    if not PRODUTO_ENCONTRADO:
+        return {"msg": "Produto não encontrado"}
 
-    session.delete(CLIENTE_ENCONTRADO)
+    session.delete(PRODUTO_ENCONTRADO)
     session.commit()
 
-    return {"msg": f"Funcionario deletado com sucesso! id: {id}"}
+    return {"msg": f"Produto deletado com sucesso! id: {id}"}

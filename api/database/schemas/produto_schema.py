@@ -2,7 +2,7 @@ from sqlalchemy import BLOB, FLOAT, VARCHAR, Column, Integer
 from db import Base
 
 
-class ClienteSchema(Base):
+class ProdutoSchema(Base):
     __tablename__ = 'tb_produto'
 
     id_produto = Column(Integer, primary_key=True,

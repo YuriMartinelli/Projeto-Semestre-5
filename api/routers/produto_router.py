@@ -2,7 +2,7 @@ from typing import Any
 from fastapi import APIRouter, status
 
 from controllers.produto_controller import controller_atualizar_produto, controller_cadastar_produto, controller_deletar_produto, controller_get_produto, controller_get_produto_by_id
-from typings.Produto import ProdutoModel
+from typings.Produto import ProdutoAtualizarModel, ProdutoModel
 
 produto_router = APIRouter(prefix="/produtos", tags=["Funcionário"])
 
@@ -23,7 +23,7 @@ async def post_produto(corpo: ProdutoModel):
 
 
 @produto_router.put("/atualizar_produto/{id}", status_code=status.HTTP_200_OK)
-async def put_produto(id: int, corpo: Any):
+async def put_produto(id: int, corpo: ProdutoAtualizarModel):
     return await controller_atualizar_produto(id, corpo)
 
 
