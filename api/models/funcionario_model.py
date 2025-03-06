@@ -22,29 +22,17 @@ async def model_get_funcionario_by_id(id: int):
 
 
 async def model_atualizar_funcionario(id: int, corpo: FuncionarioModel):
-    FUNCIONARIO_ENCONTRADO = session.query(FuncionarioTable).filter(
-        FuncionarioTable.id_funcionario == id).first()
+    VALORES_ATUALIZAR = {chave: valor for chave,
+                         valor in corpo.model_dump().items() if valor is not None}
 
-    if not FUNCIONARIO_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
-
-    for chave, valor in corpo.model_dump().items():
-        setattr(FUNCIONARIO_ENCONTRADO, chave, valor)
-
-    session.commit()
-    session.refresh()
+    session.query(FuncionarioTable).filter(
+        FuncionarioTable.id_funcionario == id).update(VALORES_ATUALIZAR)
 
     return {"msg": f"Funcionario atualizado com sucesso! id: {id}"}
 
 
 async def model_deletar_funcionario(id: int):
-    FUNCIONARIO_ENCONTRADO = session.query(FuncionarioTable).filter(
-        FuncionarioTable.id_funcionario == id).first()
-
-    if not FUNCIONARIO_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
-
-    session.delete(FUNCIONARIO_ENCONTRADO)
-    session.commit()
+    session.query(FuncionarioTable).filter(
+        FuncionarioTable.id_funcionario == id).delete()
 
     return {"msg": f"Funcionario deletado com sucesso! id: {id}"}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from controllers.funcionario_controller import controller_atualizar_funcionario, controller_deletar_funcionario, controller_get_funcionario, controller_get_funcionario_by_id, controller_post_funcionario
-from typings.Funcionario import FuncionarioModel
+from typings.Funcionario import FuncionarioAtualizarModel, FuncionarioModel
 
 funcionario_router = APIRouter(prefix="/funcionarios", tags=["Funcionário"])
 
@@ -22,10 +22,10 @@ async def post_funcionario(informacoes_funcionario: FuncionarioModel):
 
 
 @funcionario_router.put("/atualizar_funcionario/{id}", status_code=status.HTTP_200_OK)
-async def put_funcionario(id: int, corpo: FuncionarioModel):
+async def put_funcionario(id: int, corpo: FuncionarioAtualizarModel):
     return await controller_atualizar_funcionario(id, corpo)
 
 
 @funcionario_router.delete("/deletar_funcionario/{id}", status_code=status.HTTP_200_OK)
-async def delete_funcionario(id: int): 
+async def delete_funcionario(id: int):
     return await controller_deletar_funcionario(id)

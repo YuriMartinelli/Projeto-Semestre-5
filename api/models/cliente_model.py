@@ -22,29 +22,15 @@ async def model_get_cliente_by_id(id: int):
 
 
 async def model_atualizar_cliente(id: int, corpo: ClienteModel):
-    CLIENTE_ENCONTRADO = session.query(ClienteSchema).filter(
-        ClienteSchema.id_cliente == id).first()
+    VALORES_ATUALIZAR = {chave: valor for chave,
+                         valor in corpo.model_dump().items() if valor is not None}
 
-    if not CLIENTE_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
-
-    for chave, valor in corpo.model_dump().items():
-        setattr(CLIENTE_ENCONTRADO, chave, valor)
-
-    session.commit()
-    session.refresh()
-
-    return {"msg": f"Funcionario atualizado com sucesso! id: {id}"}
+    session.query(ClienteSchema).filter(ClienteSchema.id_cliente == id).update(
+        VALORES_ATUALIZAR)
+    return {"msg": f"Cliente atualizado com sucesso! id: {id}"}
 
 
 async def model_deletar_cliente(id: int):
-    CLIENTE_ENCONTRADO = session.query(ClienteSchema).filter(
-        ClienteSchema.id_cliente == id).first()
-
-    if not CLIENTE_ENCONTRADO:
-        return {"msg": "Funcionario não encontrado"}
-
-    session.delete(CLIENTE_ENCONTRADO)
-    session.commit()
-
-    return {"msg": f"Funcionario deletado com sucesso! id: {id}"}
+    session.query(ClienteSchema).filter(
+        ClienteSchema.id_cliente == id).delete()
+    return {"msg": f"Cliente deletado com sucesso! id: {id}"}

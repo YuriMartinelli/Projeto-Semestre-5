@@ -1,5 +1,5 @@
 from database.schemas.produto_schema import ProdutoSchema
-from typings.Produto import ProdutoModel
+from typings.Produto import ProdutoAtualizarModel, ProdutoModel
 import db
 
 
@@ -21,30 +21,17 @@ async def model_get_produto_by_id(id: int):
     return session.query(ProdutoSchema).filter(ProdutoSchema.id_produto == id).first()
 
 
-async def model_atualizar_produto(id: int, corpo: ProdutoModel):
-    PRODUTO_ENCONTRADO = session.query(ProdutoSchema).filter(
-        ProdutoSchema.id_produto == id).first()
-
-    if not PRODUTO_ENCONTRADO:
-        return {"msg": "Produto não encontrado"}
-
-    for chave, valor in corpo.model_dump().items():
-        setattr(PRODUTO_ENCONTRADO, chave, valor)
-
-    session.commit()
-    session.refresh()
+async def model_atualizar_produto(id: int, corpo: ProdutoAtualizarModel):
+    CAMPOS_ATUALIZAR = {chave: valor for chave,
+                        valor in corpo.model_dump().items() if valor is not None}
+    session.query(ProdutoSchema).filter(
+        ProdutoSchema.id_produto == id).update(CAMPOS_ATUALIZAR)
 
     return {"msg": f"Produto atualizado com sucesso! id: {id}"}
 
 
 async def model_deletar_produto(id: int):
-    PRODUTO_ENCONTRADO = session.query(ProdutoSchema).filter(
-        ProdutoSchema.id_produto == id).first()
-
-    if not PRODUTO_ENCONTRADO:
-        return {"msg": "Produto não encontrado"}
-
-    session.delete(PRODUTO_ENCONTRADO)
-    session.commit()
+    session.query(ProdutoSchema).filter(
+        ProdutoSchema.id_produto == id).delete()
 
     return {"msg": f"Produto deletado com sucesso! id: {id}"}
