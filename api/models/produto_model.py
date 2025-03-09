@@ -8,7 +8,9 @@ session = db.Session()
 
 
 async def model_get_produto():
-    return session.query(ProdutoSchema).all()
+    PRODUTOS = session.query(ProdutoSchema).all()
+
+    return PRODUTOS
 
 
 async def model_cadastrar_produto(corpo: ProdutoModel):
@@ -17,15 +19,20 @@ async def model_cadastrar_produto(corpo: ProdutoModel):
         session.add(novo_produto)
         session.commit()
         session.refresh(novo_produto)
-    except OperationalError as e:
         session.rollback()
+    except Exception as e:
+        session.rollback()
+
         return {"msg": f"Erro ao cadastrar produto: {e}, tente novemente"}
 
     return {"Produto": f"produto cadastrado com sucesso! id: {novo_produto.id_produto}"}
 
 
 async def model_get_produto_by_id(id: int):
-    return session.query(ProdutoSchema).filter(ProdutoSchema.id_produto == id).first()
+    PRODUTO = session.query(ProdutoSchema).filter(
+        ProdutoSchema.id_produto == id).first()
+
+    return PRODUTO
 
 
 async def model_atualizar_produto(id: int, corpo: ProdutoAtualizarModel):

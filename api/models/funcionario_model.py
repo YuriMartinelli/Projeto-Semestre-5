@@ -17,13 +17,19 @@ async def model_post_funcionario(informacoes_funcionario: FuncionarioModel):
         session.add(novo_funcionario)
         session.commit()
         session.refresh(novo_funcionario)
-    except OperationalError as e:
         session.rollback()
+    except Exception as e:
+        session.rollback()
+
+        return {"msg": f"Erro ao cadastrar funcionario: {e}, tente novemente"}
+
     return {"Funcionerio": f"Funcionario cadastrado com sucesso! id: {novo_funcionario.id_funcionario}"}
 
 
 async def model_get_funcionario_by_id(id: int):
-    return session.query(FuncionarioTable).filter(FuncionarioTable.id_funcionario == id).first()
+    FUNCIONARIO = session.query(FuncionarioTable).filter(
+        FuncionarioTable.id_funcionario == id).first()
+    return FUNCIONARIO
 
 
 async def model_atualizar_funcionario(id: int, corpo: FuncionarioModel):
