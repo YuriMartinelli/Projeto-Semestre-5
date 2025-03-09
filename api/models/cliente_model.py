@@ -1,3 +1,4 @@
+from sqlite3 import OperationalError
 from database.schemas.cliente_schema import ClienteSchema
 from typings.Cliente import ClienteModel
 import db
@@ -12,9 +13,12 @@ async def model_get_cliente():
 
 async def model_cadastrar_cliente(corpo: ClienteModel):
     novo_cliente = ClienteSchema(**corpo.model_dump())
-    session.add(novo_cliente)
-    session.commit()
-    session.flush()
+    try:
+        session.add(novo_cliente)
+        session.commit()
+    except OperationalError as e:
+        session.rollback()
+        return {"msg": f"Erro ao cadastrar cliente: {e}, tente novemente"}
     return {"Cliente": f"cliente cadastrado com sucesso! id: {novo_cliente.id_cliente}"}
 
 
