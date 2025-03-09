@@ -16,8 +16,10 @@ async def model_cadastrar_cliente(corpo: ClienteModel):
     try:
         session.add(novo_cliente)
         session.commit()
-    except OperationalError as e:
+        session.refresh(novo_cliente)
+    except (OperationalError) as e:
         session.rollback()
+        session.flush()
         return {"msg": f"Erro ao cadastrar cliente: {e}, tente novemente"}
     return {"Cliente": f"cliente cadastrado com sucesso! id: {novo_cliente.id_cliente}"}
 

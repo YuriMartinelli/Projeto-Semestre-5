@@ -1,3 +1,4 @@
+from sqlite3 import OperationalError
 from database.schemas.produto_schema import ProdutoSchema
 from typings.Produto import ProdutoAtualizarModel, ProdutoModel
 import db
@@ -12,8 +13,14 @@ async def model_get_produto():
 
 async def model_cadastrar_produto(corpo: ProdutoModel):
     novo_produto = ProdutoSchema(**corpo.model_dump())
-    session.add(novo_produto)
-    session.commit()
+    try:
+        session.add(novo_produto)
+        session.commit()
+        session.refresh(novo_produto)
+    except OperationalError as e:
+        session.rollback()
+        return {"msg": f"Erro ao cadastrar produto: {e}, tente novemente"}
+
     return {"Produto": f"produto cadastrado com sucesso! id: {novo_produto.id_produto}"}
 
 

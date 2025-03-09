@@ -1,3 +1,4 @@
+from sqlite3 import OperationalError
 from typings.Funcionario import FuncionarioModel
 from database.schemas.funcionario_schema import FuncionarioTable
 import db
@@ -12,8 +13,12 @@ async def model_get_funcionario():
 
 async def model_post_funcionario(informacoes_funcionario: FuncionarioModel):
     novo_funcionario = FuncionarioTable(**informacoes_funcionario.model_dump())
-    session.add(novo_funcionario)
-    session.commit()
+    try:
+        session.add(novo_funcionario)
+        session.commit()
+        session.refresh(novo_funcionario)
+    except OperationalError as e:
+        session.rollback()
     return {"Funcionerio": f"Funcionario cadastrado com sucesso! id: {novo_funcionario.id_funcionario}"}
 
 
