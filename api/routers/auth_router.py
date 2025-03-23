@@ -15,5 +15,4 @@ def login(login_data: LoginModel, db: Session = Depends(get_db)):
 
 @auth_router.post("/usuarios")
 def criar_usuario(usuario_data: UsuarioModel, db: Session = Depends(get_db)):
-    print("oi")
     return criar_usuario_controller(usuario_data.username, usuario_data.password, db)
