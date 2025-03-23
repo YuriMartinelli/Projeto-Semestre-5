@@ -9,7 +9,7 @@ from controllers.produto_controller import (
     controller_get_produto_by_id
 )
 # Ajuste conforme seus tipos
-from typings.Produto import ProdutoModel, ProdutoUpdateModel
+from typings.Produto import ProdutoModel, ProdutoAtualizarModel
 from services.auth_service import get_current_user
 from db import get_db
 
@@ -34,7 +34,7 @@ async def post_produto(corpo: ProdutoModel, current_user=Depends(get_current_use
 
 
 @produto_router.put("/atualizar_produto/{id}", status_code=status.HTTP_200_OK)
-async def put_produto(id: int, corpo: ProdutoUpdateModel, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+async def put_produto(id: int, corpo: ProdutoAtualizarModel, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
     return await controller_atualizar_produto(id, corpo)
 
 

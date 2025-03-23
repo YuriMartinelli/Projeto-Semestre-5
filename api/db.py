@@ -12,3 +12,11 @@ Base = declarative_base()
 
 def cria_tabelas():
     Base.metadata.create_all(engine, checkfirst=True)
+
+
+def get_db():
+    db = Session()
+    try:
+        yield db
+    finally:
+        db.close()

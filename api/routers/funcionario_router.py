@@ -3,13 +3,13 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from controllers.funcionario_controller import (
     controller_atualizar_funcionario,
-    controller_cadastar_funcionario,
+    controller_post_funcionario,
     controller_deletar_funcionario,
     controller_get_funcionario,
     controller_get_funcionario_by_id
 )
 # Ajuste conforme seus tipos
-from typings.Funcionario import FuncionarioModel, FuncionarioUpdateModel
+from typings.Funcionario import FuncionarioModel, FuncionarioAtualizarModel
 from services.auth_service import get_current_user
 from db import get_db
 
@@ -30,11 +30,11 @@ async def get_funcionario_by_id(id: int, current_user=Depends(get_current_user),
 
 @funcionario_router.post("/criar_funcionario/", status_code=status.HTTP_201_CREATED)
 async def post_funcionario(corpo: FuncionarioModel, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
-    return await controller_cadastar_funcionario(corpo)
+    return await controller_post_funcionario(corpo)
 
 
 @funcionario_router.put("/atualizar_funcionario/{id}", status_code=status.HTTP_200_OK)
-async def put_funcionario(id: int, corpo: FuncionarioUpdateModel, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+async def put_funcionario(id: int, corpo: FuncionarioAtualizarModel, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
     return await controller_atualizar_funcionario(id, corpo)
 
 
