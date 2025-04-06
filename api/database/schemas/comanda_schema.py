@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, DateTime, Integer, String, ForeignKey
 from db import Base
 
 
@@ -8,7 +8,7 @@ class ComandaSchema(Base):
     comanda = Column(String, nullable=False)
     data_hora = Column(DateTime, nullable=False)
     status = Column(String(4), nullable=False)
-    id_funcionario = Column(String, unique=True, nullable=False,
-                            foreign_key=True, reference="funcionarios.id")
-    id_cliente = Column(String, unique=True, nullable=True,
-                        foreign_key=True, reference="clientes.id")
+    id_funcionario = Column(String, ForeignKey(
+        "funcionarios.id_funcionario"), unique=True, nullable=False)
+    id_cliente = Column(String, ForeignKey(
+        "clientes.id_cliente"), unique=True, nullable=True)

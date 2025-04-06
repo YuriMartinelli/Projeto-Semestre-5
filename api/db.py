@@ -7,10 +7,12 @@ engine = create_engine(STR_DATABASE, echo=False)
 
 Session = sessionmaker(bind=engine)
 
+
 Base = declarative_base()
 
 
 def cria_tabelas():
+    Base.metadata.clear()
     Base.metadata.create_all(engine, checkfirst=True)
 
 
